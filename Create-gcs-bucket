@@ -1,0 +1,21 @@
+provider "google" {
+  credentials = file("path/to/json/key")
+  project     = "project-id"
+  region      = "us-central1"
+}
+
+# Define the Google Cloud Storage bucket
+resource "google_storage_bucket" "bucket" {
+  name     = "bucket1780"  # Replace with a unique bucket name
+  location = "US"
+
+  # Optional: Configure bucket lifecycle management, versioning, etc.
+  lifecycle_rule {
+    action {
+      type = "Delete"
+    }
+    condition {
+      age = 30
+    }
+  }
+}
