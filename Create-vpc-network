@@ -1,0 +1,25 @@
+provider "google" {
+  credentials = file("/path/to/json/key")
+  project     = "project-id"
+  region      = "us-central1"
+}
+
+# Define the VPC network
+resource "google_compute_network" "vpc_network" {
+  name                    = "terraform-vpc"  # Replace with your desired network name
+  auto_create_subnetworks = false
+
+  # Optional: Description of the VPC network
+  description = "My custom VPC network"
+}
+
+# Optional: Define a subnet for the VPC network
+resource "google_compute_subnetwork" "subnet" {
+  name          = "my-subnetwork"
+  network       = google_compute_network.vpc_network.id
+  region        = "us-central1"
+  ip_cidr_range = "10.0.1.0/24"  # Replace with your desired CIDR range
+
+  # Optional: Description of the subnet
+  description   = "My custom subnet"
+}
