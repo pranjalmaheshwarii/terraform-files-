@@ -1,0 +1,24 @@
+provider "google" {
+  credentials = file("/path/to/json/key")
+  project     = "project-id"
+  region      = "us-central1"
+}
+
+# Define the firewall rule
+resource "google_compute_firewall" "allow_port_80" {
+  name    = "allow-port-80"
+  network = "default"  # Use the default network or specify your own
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+
+  # Optional: Define target tags to apply the rule only to instances with specific tags
+  target_tags = ["http-server"]
+
+  # Optional: Description for the firewall rule
+  description = "Allow HTTP traffic on port 80 to all instances with the http-server tag"
+}
