@@ -28,5 +28,8 @@ resource "google_compute_instance" "vm_instance" {
     ssh-keys = "user:<your_ssh_public_key>"
   }
 
+# Define the startup script metadata
+  metadata_startup_script = file("startup.sh")
   tags = ["http-server"]
 }
+
